@@ -1,5 +1,7 @@
 package io.aovis.trackcovid.services;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +31,11 @@ public class DataService {
         HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
         //prints out the response
         System.out.println(httpResponse.body());
+        //Adding auto detect header block
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
+        for (CSVRecord record : records) {
+            String id = record.get("ID");
 
-        
+        }
     }
 }
